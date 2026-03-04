@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RTL Center - Professional Development LMS</title>
+    <title>RTL Center | Real-Time Leadership for Resilient Organizations</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,6 +39,12 @@
                         accent: {
                             500: '#8b5cf6', // Violet
                             600: '#7c3aed',
+                        },
+                        move: {
+                            m: '#0d9488', // Teal
+                            o: '#d97706', // Amber
+                            v: '#7c3aed', // Violet
+                            e: '#059669', // Emerald
                         }
                     }
                 }
@@ -48,25 +54,12 @@
 
     <style>
         /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Animations */
-        .fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -83,20 +76,25 @@
             border: 10px solid #0c4a6e;
             font-family: 'Times New Roman', serif;
         }
-        .cert-seal {
-            width: 100px;
-            height: 100px;
-            background: radial-gradient(circle, #fbbf24 0%, #d97706 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+            border-radius: 0.75rem;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
     </style>
-<base target="_blank">
 </head>
 <body class="bg-slate-50 text-slate-800 h-screen overflow-hidden flex">
 
@@ -139,19 +137,19 @@
             </ul>
 
             <div class="mt-8 px-6">
-                <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Specializations</p>
+                <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Focus Areas</p>
                 <div class="space-y-2">
                     <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
-                        <i class="fa-solid fa-circle text-[8px] text-brand-500"></i> Systems Thinking
+                        <i class="fa-solid fa-circle text-[8px] text-move-m"></i> Master the Moment
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
-                        <i class="fa-solid fa-circle text-[8px] text-accent-500"></i> Real-Time Leadership
+                        <i class="fa-solid fa-circle text-[8px] text-move-o"></i> Generate Options
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
-                        <i class="fa-solid fa-circle text-[8px] text-emerald-500"></i> Risk Management
+                        <i class="fa-solid fa-circle text-[8px] text-move-v"></i> Validate Choices
                     </div>
                     <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
-                        <i class="fa-solid fa-circle text-[8px] text-rose-500"></i> AI Analytics
+                        <i class="fa-solid fa-circle text-[8px] text-move-e"></i> Engage & Execute
                     </div>
                 </div>
             </div>
@@ -175,7 +173,7 @@
                 </button>
                 <div class="relative hidden md:block">
                     <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
-                    <input type="text" placeholder="Search courses, skills..." class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none w-64 transition-all">
+                    <input type="text" placeholder="Search courses, tools..." class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none w-64 transition-all">
                 </div>
             </div>
             
@@ -206,9 +204,9 @@
     <!-- MODALS -->
     
     <!-- Course Details Modal -->
-    <div id="course-modal" class="fixed inset-0 z-50 hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="ui.closeModal('course-modal')"></div>
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden fade-in">
+    <div id="course-modal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="ui.closeModal('course-modal')"></div>
+        <div class="relative min-h-screen md:min-h-0 md:absolute md:top-10 md:left-1/2 md:transform md:-translate-x-1/2 md:w-full md:max-w-3xl bg-white md:rounded-2xl shadow-2xl overflow-hidden fade-in my-8 md:my-0">
             <div id="course-modal-content" class="p-0">
                 <!-- Injected via JS -->
             </div>
@@ -216,9 +214,9 @@
     </div>
 
     <!-- Certificate Preview Modal -->
-    <div id="cert-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm">
-        <div class="bg-white p-4 rounded-lg shadow-2xl max-w-4xl w-full">
-            <div id="cert-preview-area" class="mb-4 flex justify-center">
+    <div id="cert-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-white p-4 rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div id="cert-preview-area" class="mb-4 flex justify-center overflow-x-auto">
                 <!-- Certificate injected here -->
             </div>
             <div class="flex justify-end gap-3">
@@ -238,23 +236,116 @@
                 {
                     id: 'rtl-101',
                     title: 'Real-Time Leadership for Resilient Organizations',
-                    category: 'Leadership',
-                    level: 'Advanced',
+                    subtitle: 'A MOVE-Based Learning Journey',
+                    category: 'Leadership & Resilience',
+                    level: 'Intermediate',
                     modules: 9,
-                    duration: '12h 30m',
-                    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
-                    description: 'Master the MOVE framework to lead effectively in crisis and uncertainty. Designed for government and non-profit leaders.',
+                    duration: 'Approx. 2 hours',
+                    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                    description: 'Master the MOVE framework (Master, Open, Validate, Execute) to lead effectively in crisis and uncertainty. Designed specifically for SME leaders in climate-vulnerable regions, NGO managers, and LGU officials.',
+                    targetAudience: ['SME Leaders', 'NGO Managers', 'LGU Officials', 'Team Leads'],
                     framework: 'MOVE',
                     modulesList: [
-                        { id: 0, title: 'Module 0: Introduction to Crisis Leadership', type: 'video', duration: '15:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 1, title: 'Module 1: Master the Moment (Mindfulness)', type: 'video', duration: '45:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 2, title: 'Module 2: Generate Options (Strategic Thinking)', type: 'video', duration: '50:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 3, title: 'Module 3: Validate Choices (Data-Driven Decisions)', type: 'video', duration: '40:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 4, title: 'Module 4: Engage & Execute (Team Mobilization)', type: 'video', duration: '55:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 5, title: 'Module 5: Systems Thinking in Government', type: 'reading', duration: '30:00', content: 'Systems thinking is crucial for local government finance...', completed: false },
-                        { id: 6, title: 'Module 6: Integrated Risk Management', type: 'video', duration: '60:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
-                        { id: 7, title: 'Module 7: AI-Driven Performance Analytics', type: 'interactive', duration: '45:00', completed: false },
-                        { id: 8, title: 'Module 8: Final Assessment & Capstone', type: 'quiz', duration: '30:00', completed: false }
+                        { 
+                            id: 0, 
+                            title: 'Module 0: Welcome & Self-Assessment', 
+                            type: 'Assessment', 
+                            duration: '10 mins', 
+                            url: 'https://asilvainnovations.github.io/website/rtl-assessment.html', // External link handled specially
+                            videoUrl: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F18nZjY3LNY%2F&show_text=0&width=560',
+                            content: 'Welcome to the journey. Begin by taking the Real-Time Leadership Self-Assessment to benchmark your current skills. Set a personal intention for this course (e.g., "I will lead my LGU team calmly during early-warning phases").',
+                            tools: ['Self-Assessment Link'],
+                            applyIt: 'Set your leadership intention in the forum below.'
+                        },
+                        { 
+                            id: 1, 
+                            title: 'Module 1: Mastering the Moment', 
+                            type: 'video', 
+                            duration: '12 mins', 
+                            moveElement: 'M',
+                            roles: ['Uncertainty Navigator', 'Adaptive Strategist'],
+                            quote: '"Real-Time Leaders are comfortable in the face of the unknown."',
+                            videoUrl: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F18nZjY3LNY%2F',
+                            content: 'Learn to pause before reacting—even amid Red Alerts or team crises. Use a simple triage method to separate signal from noise (data, emotions, rumors). Practice grounded awareness: What’s happening with people? With systems? With external risks?',
+                            tools: ['Mastering the Moment Checklist'],
+                            applyIt: 'Reflect on a recent high-pressure moment—where could presence have changed the outcome?'
+                        },
+                        { 
+                            id: 2, 
+                            title: 'Module 2: Opening Options Under Pressure', 
+                            type: 'video', 
+                            duration: '10 mins', 
+                            moveElement: 'O',
+                            roles: ['Innovative Leader', 'Empowerment Facilitator'],
+                            quote: '"Avoid binary choices. Create space for multiple paths forward."',
+                            videoUrl: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1DtbHnH4zZ%2F',
+                            content: 'Shift from “Do we act or wait?” to “What are our 3 best options right now?” Foster psychological safety so distributed teams contribute ideas—even remotely. Use lightweight ideation methods (e.g., virtual whiteboards, rapid polling).',
+                            tools: ['Option Storm Template'],
+                            applyIt: 'Run a micro-brainstorm on a live challenge using the template.'
+                        },
+                        { 
+                            id: 3, 
+                            title: 'Module 3: Validating Choices', 
+                            type: 'video', 
+                            duration: '11 mins', 
+                            moveElement: 'V',
+                            roles: ['Decisive Decision-Maker', 'Empathetic Mentor'],
+                            quote: '"Speed without alignment leads to rework. Validation creates shared clarity."',
+                            videoUrl: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F17zX7TDBTP%2F',
+                            content: 'Align decisions with core values, impact potential, and available capacity. Ask: “Does this protect our people? Advance resilience? Fit our resources?” Avoid “analysis paralysis” by setting clear validation thresholds.',
+                            tools: ['Validation Compass (Values × Impact × Feasibility)'],
+                            applyIt: 'Re-evaluate a recent decision using the Compass.'
+                        },
+                        { 
+                            id: 4, 
+                            title: 'Module 4: Evaluate & Execute with Clarity', 
+                            type: 'video', 
+                            duration: '12 mins', 
+                            moveElement: 'E',
+                            roles: ['Collaborative Communicator', 'Decisive Decision-Maker'],
+                            quote: '"Execution fails not from poor plans—but from unclear communication."',
+                            videoUrl: 'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fr%2F1J43saUZ7n%2F',
+                            content: 'Frame decisions with context, not just commands (“Here’s why we’re doing this…”). Assign micro-commitments with clear owners and feedback loops. Use data dashboards or stand-ups to maintain momentum without micromanaging.',
+                            tools: ['MOVE Message Builder'],
+                            applyIt: 'Draft a real-time team message using the builder.'
+                        },
+                        { 
+                            id: 5, 
+                            title: 'Module 5: Leading Remote & Distributed Teams', 
+                            type: 'interactive', 
+                            duration: '15 mins', 
+                            moveElement: 'Integration',
+                            content: 'Design resilience rhythms: daily check-ins that build connection + clarity. Prevent isolation and burnout in hybrid teams. Leverage collaborative project management tools without adding complexity.',
+                            tools: ['Resilience Rhythm Checklist'],
+                            applyIt: 'Audit your team’s communication flow—what’s working? What’s missing?'
+                        },
+                        { 
+                            id: 6, 
+                            title: 'Module 6: Data-Informed Decisions', 
+                            type: 'reading', 
+                            duration: '12 mins', 
+                            content: 'Use “good enough” data from trusted sources (e.g., PAGASA, internal dashboards, community feedback). Integrate AI as a sense-making partner—not a replacement for judgment. Balance speed and reflection using decision thresholds.',
+                            tools: ['When to Act vs. Wait Guide'],
+                            applyIt: 'Simulate a climate-risk decision using public data + your judgment.'
+                        },
+                        { 
+                            id: 7, 
+                            title: 'Module 7: Sustaining Your Leadership Stamina', 
+                            type: 'interactive', 
+                            duration: '10 mins', 
+                            content: 'Recognize leadership as a marathon of moments—not a sprint. Build micro-practices for restoration (e.g., 2-minute breath reset, boundary rituals). Model sustainable leadership so your team can thrive, not just survive.',
+                            tools: ['Micro-Restoration Menu'],
+                            applyIt: 'Design your personal resilience ritual for the next 30 days.'
+                        },
+                        { 
+                            id: 8, 
+                            title: 'Module 8: Your Real-Time Leadership Action Plan', 
+                            type: 'quiz', 
+                            duration: '15 mins', 
+                            content: 'Re-take the Self-Assessment to measure growth. Commit to one MOVE-based practice to embed over the next month. Receive your digital badge and shareable summary.',
+                            tools: ['Action Plan Template'],
+                            applyIt: 'Finalize your 30-day commitment plan.'
+                        }
                     ]
                 },
                 {
@@ -281,12 +372,13 @@
                 }
             ],
             forum: [
-                { id: 1, courseId: 'rtl-101', moduleId: 1, user: 'Sarah J.', role: 'learner', text: 'How do you apply "Master the Moment" when you have 5 back-to-back meetings?', likes: 12, replies: 3, isSolution: false },
-                { id: 2, courseId: 'rtl-101', moduleId: 1, user: 'Instructor Mike', role: 'instructor', text: 'Great question Sarah. The key is micro-mindfulness...', likes: 24, replies: 0, isSolution: true }
+                { id: 1, courseId: 'rtl-101', moduleId: 1, user: 'Sarah J. (LGU)', role: 'learner', text: 'How do you apply "Master the Moment" when you have 5 back-to-back meetings during a typhoon warning?', likes: 12, replies: 3, isSolution: false },
+                { id: 2, courseId: 'rtl-101', moduleId: 1, user: 'Instructor Mike', role: 'instructor', text: 'Great question Sarah. The key is micro-mindfulness. Even 30 seconds of focused breathing between meetings resets your nervous system...', likes: 24, replies: 0, isSolution: true },
+                { id: 3, courseId: 'rtl-101', moduleId: 2, user: 'David (SME)', role: 'learner', text: 'The Option Storm Template worked great for our supply chain crisis. We generated 4 viable alternatives in 10 mins!', likes: 8, replies: 1, isSolution: false }
             ],
             users: [
                 { id: 1, name: 'Admin User', email: 'admin@rtl.com', password: 'admin123', role: 'admin', enrolled: ['rtl-101', 'st-201'] },
-                { id: 2, name: 'Demo Learner', email: 'demo@rtl.com', password: 'demo123', role: 'learner', enrolled: ['rtl-101'] }
+                { id: 2, name: 'Maria Santos', email: 'demo@rtl.com', password: 'demo123', role: 'learner', enrolled: ['rtl-101'] }
             ],
             certificates: []
         };
@@ -347,12 +439,6 @@
                 const app = document.getElementById('app-content');
                 app.innerHTML = ''; // Clear content
 
-                // Update Active Nav
-                document.querySelectorAll('.nav-btn').forEach(btn => {
-                    btn.classList.remove('bg-slate-800', 'text-white');
-                    btn.classList.add('text-slate-300');
-                });
-
                 switch(view) {
                     case 'login':
                         app.innerHTML = views.login();
@@ -392,7 +478,7 @@
                                     <i class="fa-solid fa-shield-halved"></i>
                                 </div>
                                 <h2 class="text-2xl font-bold text-slate-800">Welcome Back</h2>
-                                <p class="text-slate-500">Sign in to continue your learning journey</p>
+                                <p class="text-slate-500">Sign in to continue your MOVE journey</p>
                             </div>
                             <form onsubmit="event.preventDefault(); handleLogin();" class="space-y-4">
                                 <div>
@@ -419,7 +505,8 @@
 
             dashboard() {
                 const enrolledCourses = db.courses.filter(c => state.currentUser.enrolled.includes(c.id));
-                const progress = Math.floor(Math.random() * 100); // Simulated progress
+                const rtlCourse = enrolledCourses.find(c => c.id === 'rtl-101');
+                const progress = 25; // Simulated progress for demo
                 
                 return `
                     <div class="max-w-6xl mx-auto space-y-8 fade-in">
@@ -428,22 +515,49 @@
                             <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
                             <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                                 <div>
+                                    <div class="inline-block px-3 py-1 bg-brand-500/20 border border-brand-400/30 rounded-full text-brand-100 text-xs font-bold mb-3 tracking-wide uppercase">
+                                        MOVE Framework
+                                    </div>
                                     <h1 class="text-3xl font-bold mb-2">Hello, ${state.currentUser.name}!</h1>
-                                    <p class="text-brand-100 mb-6 max-w-lg">Continue your journey in Real-Time Leadership. You are making great progress on your MOVE framework certification.</p>
-                                    <button onclick="router.navigate('courses')" class="bg-white text-brand-900 px-6 py-2.5 rounded-lg font-bold hover:bg-brand-50 transition-colors shadow-lg">
-                                        Continue Learning
+                                    <p class="text-brand-100 mb-6 max-w-lg">You are currently mastering <strong>Real-Time Leadership</strong>. Your next step is Module 2: Opening Options Under Pressure.</p>
+                                    <button onclick="router.navigate('course-player', {courseId: 'rtl-101', moduleId: 2})" class="bg-white text-brand-900 px-6 py-2.5 rounded-lg font-bold hover:bg-brand-50 transition-colors shadow-lg flex items-center gap-2">
+                                        <i class="fa-solid fa-play"></i> Resume Learning
                                     </button>
                                 </div>
                                 <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 min-w-[250px]">
                                     <div class="flex justify-between items-end mb-2">
-                                        <span class="text-sm font-medium text-brand-100">Weekly Goal</span>
-                                        <span class="text-2xl font-bold">85%</span>
+                                        <span class="text-sm font-medium text-brand-100">Course Progress</span>
+                                        <span class="text-2xl font-bold">${progress}%</span>
                                     </div>
                                     <div class="w-full bg-black/30 rounded-full h-2.5">
-                                        <div class="bg-brand-400 h-2.5 rounded-full" style="width: 85%"></div>
+                                        <div class="bg-brand-400 h-2.5 rounded-full transition-all duration-1000" style="width: ${progress}%"></div>
                                     </div>
-                                    <p class="text-xs text-brand-200 mt-3">4.5 hours studied this week</p>
+                                    <p class="text-xs text-brand-200 mt-3">2 of 9 modules completed</p>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- MOVE Framework Visual -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-move-m text-center">
+                                <div class="text-2xl font-bold text-move-m mb-1">M</div>
+                                <div class="text-xs font-bold text-slate-700 uppercase">Master</div>
+                                <div class="text-[10px] text-slate-400">The Moment</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-move-o text-center">
+                                <div class="text-2xl font-bold text-move-o mb-1">O</div>
+                                <div class="text-xs font-bold text-slate-700 uppercase">Open</div>
+                                <div class="text-[10px] text-slate-400">Options</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-move-v text-center">
+                                <div class="text-2xl font-bold text-move-v mb-1">V</div>
+                                <div class="text-xs font-bold text-slate-700 uppercase">Validate</div>
+                                <div class="text-[10px] text-slate-400">Choices</div>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl shadow-sm border-t-4 border-move-e text-center">
+                                <div class="text-2xl font-bold text-move-e mb-1">E</div>
+                                <div class="text-xs font-bold text-slate-700 uppercase">Engage</div>
+                                <div class="text-[10px] text-slate-400">& Execute</div>
                             </div>
                         </div>
 
@@ -454,7 +568,7 @@
                                     <i class="fa-solid fa-book-open"></i>
                                 </div>
                                 <div>
-                                    <p class="text-slate-500 text-sm">Courses in Progress</p>
+                                    <p class="text-slate-500 text-sm">Active Courses</p>
                                     <h3 class="text-2xl font-bold text-slate-800">${enrolledCourses.length}</h3>
                                 </div>
                             </div>
@@ -463,7 +577,7 @@
                                     <i class="fa-solid fa-certificate"></i>
                                 </div>
                                 <div>
-                                    <p class="text-slate-500 text-sm">Certificates Earned</p>
+                                    <p class="text-slate-500 text-sm">Certificates</p>
                                     <h3 class="text-2xl font-bold text-slate-800">${db.certificates.filter(c => c.userId === state.currentUser.id).length}</h3>
                                 </div>
                             </div>
@@ -472,37 +586,9 @@
                                     <i class="fa-solid fa-bolt"></i>
                                 </div>
                                 <div>
-                                    <p class="text-slate-500 text-sm">Skill Points</p>
-                                    <h3 class="text-2xl font-bold text-slate-800">1,240</h3>
+                                    <p class="text-slate-500 text-sm">Leadership Stamina</p>
+                                    <h3 class="text-2xl font-bold text-slate-800">85%</h3>
                                 </div>
-                            </div>
-                        </div>
-
-                        <!-- Continue Learning -->
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-800 mb-4">Continue Learning</h2>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                ${enrolledCourses.map(course => `
-                                    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col sm:flex-row hover:shadow-md transition-shadow">
-                                        <div class="sm:w-1/3 h-32 sm:h-auto bg-cover bg-center" style="background-image: url('${course.image}')"></div>
-                                        <div class="p-5 flex-1 flex flex-col justify-between">
-                                            <div>
-                                                <div class="flex justify-between items-start mb-1">
-                                                    <span class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded">${course.category}</span>
-                                                    <span class="text-xs text-slate-400">${course.duration}</span>
-                                                </div>
-                                                <h3 class="font-bold text-slate-800 mb-2 line-clamp-1">${course.title}</h3>
-                                                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-1">
-                                                    <div class="bg-brand-500 h-1.5 rounded-full" style="width: ${progress}%"></div>
-                                                </div>
-                                                <p class="text-xs text-slate-500 text-right">${progress}% Complete</p>
-                                            </div>
-                                            <button onclick="router.navigate('course-player', {courseId: '${course.id}'})" class="mt-3 w-full py-2 border border-brand-600 text-brand-600 rounded-lg text-sm font-semibold hover:bg-brand-50 transition-colors">
-                                                Resume Course
-                                            </button>
-                                        </div>
-                                    </div>
-                                `).join('')}
                             </div>
                         </div>
                     </div>
@@ -515,17 +601,13 @@
                         <div class="flex justify-between items-center mb-8">
                             <div>
                                 <h1 class="text-2xl font-bold text-slate-800">Course Library</h1>
-                                <p class="text-slate-500">Explore specialized tracks for resilient organizations</p>
-                            </div>
-                            <div class="flex gap-2">
-                                <button class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-filter mr-2"></i>Filter</button>
-                                <button class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-sort mr-2"></i>Sort</button>
+                                <p class="text-slate-500">Specialized tracks for resilient organizations</p>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             ${db.courses.map(course => `
-                                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden group hover:shadow-xl transition-all duration-300">
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden group hover:shadow-xl transition-all duration-300 flex flex-col">
                                     <div class="h-48 overflow-hidden relative">
                                         <img src="${course.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
@@ -535,20 +617,23 @@
                                             ${course.level}
                                         </div>
                                     </div>
-                                    <div class="p-5">
+                                    <div class="p-5 flex-1 flex flex-col">
                                         <div class="flex items-center gap-2 mb-2">
                                             <span class="text-xs font-semibold text-brand-600 uppercase tracking-wider">${course.framework}</span>
                                             <span class="text-slate-300">•</span>
                                             <span class="text-xs text-slate-500">${course.modules} Modules</span>
                                         </div>
-                                        <h3 class="font-bold text-lg text-slate-800 mb-2 line-clamp-2 h-12">${course.title}</h3>
-                                        <p class="text-sm text-slate-500 mb-4 line-clamp-2">${course.description}</p>
-                                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-                                            <div class="flex -space-x-2">
-                                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white"></div>
-                                                <div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white"></div>
-                                                <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-xs text-slate-500 font-bold">+40</div>
+                                        <h3 class="font-bold text-lg text-slate-800 mb-2 line-clamp-2">${course.title}</h3>
+                                        <p class="text-sm text-slate-500 mb-4 line-clamp-2 flex-1">${course.description}</p>
+                                        
+                                        ${course.id === 'rtl-101' ? `
+                                            <div class="flex flex-wrap gap-1 mb-4">
+                                                ${course.targetAudience.map(aud => `<span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-1 rounded">${aud}</span>`).join('')}
                                             </div>
+                                        ` : ''}
+
+                                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                                            <span class="text-xs text-slate-400 font-medium">${course.duration}</span>
                                             <button onclick="ui.openCourseModal('${course.id}')" class="text-brand-600 font-semibold text-sm hover:underline">Details <i class="fa-solid fa-arrow-right ml-1"></i></button>
                                         </div>
                                     </div>
@@ -562,64 +647,112 @@
             coursePlayer() {
                 const course = db.courses.find(c => c.id === state.activeCourse);
                 const currentModule = course.modulesList[state.activeModule];
+                
+                // Determine MOVE color
+                let moveColor = 'bg-slate-500';
+                if(currentModule.moveElement === 'M') moveColor = 'bg-move-m';
+                if(currentModule.moveElement === 'O') moveColor = 'bg-move-o';
+                if(currentModule.moveElement === 'V') moveColor = 'bg-move-v';
+                if(currentModule.moveElement === 'E') moveColor = 'bg-move-e';
 
                 return `
                     <div class="h-full flex flex-col lg:flex-row gap-6 fade-in -m-6 p-6 bg-slate-100 h-[calc(100vh-64px)]">
                         <!-- Video/Content Area -->
                         <div class="flex-1 flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden">
-                            <div class="aspect-video bg-black relative group">
+                            
+                            <!-- Video Player Section -->
+                            <div class="bg-black relative">
                                 ${currentModule.type === 'video' ? `
-                                    <iframe id="video-frame" class="w-full h-full" src="${currentModule.url}" frameborder="0" allowfullscreen></iframe>
+                                    <div class="video-container rounded-none">
+                                        <iframe src="${currentModule.videoUrl}" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                    </div>
+                                ` : currentModule.type === 'Assessment' ? `
+                                     <div class="aspect-video bg-slate-900 flex flex-col items-center justify-center text-white p-8 text-center">
+                                        <i class="fa-solid fa-clipboard-check text-5xl mb-4 text-brand-500"></i>
+                                        <h3 class="text-2xl font-bold mb-2">${currentModule.title}</h3>
+                                        <p class="text-slate-300 mb-6 max-w-md">${currentModule.content}</p>
+                                        <a href="${currentModule.url}" target="_blank" class="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-lg font-bold transition-colors">
+                                            Take Assessment <i class="fa-solid fa-external-link-alt ml-2"></i>
+                                        </a>
+                                    </div>
                                 ` : `
-                                    <div class="w-full h-full flex items-center justify-center bg-slate-900 text-white flex-col p-8 text-center">
-                                        <i class="fa-solid fa-book-open text-4xl mb-4 text-brand-500"></i>
-                                        <h3 class="text-xl font-bold mb-2">${currentModule.title}</h3>
-                                        <p class="text-slate-400 max-w-lg">${currentModule.content || 'Reading content goes here...'}</p>
+                                    <div class="aspect-video bg-slate-50 flex items-center justify-center p-12 border-b border-slate-200">
+                                        <div class="max-w-2xl text-center">
+                                            <div class="w-16 h-16 ${moveColor} text-white rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg">
+                                                <i class="fa-solid ${currentModule.moveElement ? 'fa-bolt' : 'fa-book-open'}"></i>
+                                            </div>
+                                            <h2 class="text-2xl font-bold text-slate-800 mb-4">${currentModule.title}</h2>
+                                            <p class="text-slate-600 leading-relaxed">${currentModule.content}</p>
+                                        </div>
                                     </div>
                                 `}
                             </div>
                             
-                            <div class="p-6 flex-1 overflow-y-auto">
-                                <div class="flex items-center gap-3 mb-4">
-                                    <span class="px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold uppercase">Module ${currentModule.id}</span>
-                                    <h1 class="text-2xl font-bold text-slate-800">${currentModule.title}</h1>
+                            <!-- Content Details -->
+                            <div class="p-8 flex-1 overflow-y-auto">
+                                <div class="flex items-center gap-3 mb-6">
+                                    ${currentModule.moveElement ? `
+                                        <span class="w-8 h-8 ${moveColor} text-white rounded-lg flex items-center justify-center font-bold text-sm shadow-md">
+                                            ${currentModule.moveElement}
+                                        </span>
+                                    ` : ''}
+                                    <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider">Module ${currentModule.id}</span>
+                                    <span class="text-slate-400 text-xs"><i class="fa-regular fa-clock mr-1"></i> ${currentModule.duration}</span>
                                 </div>
-                                
-                                <p class="text-slate-600 mb-6 leading-relaxed">
-                                    In this module, we explore the core concepts of the ${course.framework} framework. 
-                                    Understanding these principles is vital for leading resilient organizations in the public sector.
-                                </p>
 
-                                <!-- Tools & Resources -->
-                                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-6">
-                                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                                        <i class="fa-solid fa-toolbox text-brand-500"></i> Tools & Resources
+                                ${currentModule.quote ? `
+                                    <blockquote class="border-l-4 border-brand-500 pl-4 italic text-slate-600 mb-6 bg-slate-50 p-4 rounded-r-lg">
+                                        ${currentModule.quote}
+                                    </blockquote>
+                                ` : ''}
+
+                                ${currentModule.roles ? `
+                                    <div class="mb-6">
+                                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Key Leadership Roles</h4>
+                                        <div class="flex flex-wrap gap-2">
+                                            ${currentModule.roles.map(role => `
+                                                <span class="px-3 py-1 bg-brand-50 text-brand-700 rounded-full text-xs font-semibold border border-brand-100">
+                                                    ${role}
+                                                </span>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                ` : ''}
+
+                                <!-- Tools Section -->
+                                <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 mb-8">
+                                    <h3 class="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                        <i class="fa-solid fa-toolbox text-brand-500"></i> Downloadable Tools
                                     </h3>
                                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <a href="#" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-brand-300 hover:shadow-sm transition-all">
-                                            <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
-                                            <div>
-                                                <p class="text-sm font-semibold text-slate-700">Module Checklist</p>
-                                                <p class="text-xs text-slate-400">PDF, 24KB</p>
-                                            </div>
-                                        </a>
-                                        <a href="#" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-brand-300 hover:shadow-sm transition-all">
-                                            <i class="fa-solid fa-file-word text-blue-500 text-xl"></i>
-                                            <div>
-                                                <p class="text-sm font-semibold text-slate-700">Action Template</p>
-                                                <p class="text-xs text-slate-400">DOCX, 156KB</p>
-                                            </div>
-                                        </a>
+                                        ${currentModule.tools.map(tool => `
+                                            <button onclick="alert('Downloading ${tool}...')" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-brand-300 hover:shadow-sm transition-all text-left group">
+                                                <i class="fa-solid fa-file-lines text-brand-500 text-xl group-hover:scale-110 transition-transform"></i>
+                                                <div>
+                                                    <p class="text-sm font-semibold text-slate-700 group-hover:text-brand-700">${tool}</p>
+                                                    <p class="text-xs text-slate-400">Click to download</p>
+                                                </div>
+                                            </button>
+                                        `).join('')}
                                     </div>
                                 </div>
 
+                                <!-- Apply It Challenge -->
+                                <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200 mb-8">
+                                    <h3 class="font-bold text-amber-800 mb-2 flex items-center gap-2">
+                                        <i class="fa-solid fa-fire text-amber-600"></i> Apply It Challenge
+                                    </h3>
+                                    <p class="text-amber-900/80 text-sm mb-4">${currentModule.applyIt}</p>
+                                    <button class="text-xs font-bold text-amber-700 underline hover:text-amber-900">Share your results in the forum below</button>
+                                </div>
+
                                 <!-- Discussion Forum -->
-                                <div class="mt-8">
-                                    <h3 class="font-bold text-slate-800 mb-4">Discussion Forum</h3>
-                                    <div class="space-y-4">
+                                <div class="mt-8 border-t border-slate-100 pt-8">
+                                    <h3 class="font-bold text-slate-800 mb-6 text-lg">Discussion Forum</h3>
+                                    <div class="space-y-4 mb-6">
                                         ${db.forum.filter(p => p.moduleId === currentModule.id).map(post => `
-                                            <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
-                                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white font-bold text-sm">
+                                            <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100 ${post.isSolution ? 'ring-1 ring-green-400 bg-green-50/30' : ''}">
+                                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                                                     ${post.user.charAt(0)}
                                                 </div>
                                                 <div class="flex-1">
@@ -628,55 +761,75 @@
                                                         ${post.role === 'instructor' ? '<span class="bg-brand-100 text-brand-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Instructor</span>' : ''}
                                                         ${post.isSolution ? '<span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase"><i class="fa-solid fa-check mr-1"></i>Solution</span>' : ''}
                                                     </div>
-                                                    <p class="text-slate-600 text-sm">${post.text}</p>
+                                                    <p class="text-slate-600 text-sm leading-relaxed">${post.text}</p>
                                                     <div class="mt-2 flex items-center gap-4 text-xs text-slate-400">
-                                                        <button class="hover:text-brand-600"><i class="fa-regular fa-thumbs-up"></i> ${post.likes}</button>
+                                                        <button class="hover:text-brand-600 flex items-center gap-1"><i class="fa-regular fa-thumbs-up"></i> ${post.likes}</button>
                                                         <button class="hover:text-brand-600">Reply</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         `).join('')}
                                     </div>
-                                    <div class="mt-4 flex gap-3">
-                                        <input type="text" placeholder="Ask a question or share insight..." class="flex-1 border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-brand-500">
-                                        <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-700">Post</button>
+                                    <div class="flex gap-3">
+                                        <input type="text" placeholder="Share your insight or ask a question..." class="flex-1 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500">
+                                        <button class="bg-brand-600 text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-brand-700 transition-colors">Post</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Sidebar Curriculum -->
-                        <div class="w-full lg:w-80 bg-white rounded-2xl shadow-sm flex flex-col overflow-hidden">
+                        <div class="w-full lg:w-80 bg-white rounded-2xl shadow-sm flex flex-col overflow-hidden h-full">
                             <div class="p-5 border-b border-slate-100 bg-slate-50">
-                                <h3 class="font-bold text-slate-800">Course Content</h3>
-                                <div class="mt-2 w-full bg-slate-200 rounded-full h-2">
-                                    <div class="bg-brand-500 h-2 rounded-full" style="width: ${(state.activeModule / course.modulesList.length) * 100}%"></div>
+                                <h3 class="font-bold text-slate-800 text-sm uppercase tracking-wider mb-1">Course Curriculum</h3>
+                                <p class="text-xs text-slate-500 truncate">${course.title}</p>
+                                <div class="mt-3 w-full bg-slate-200 rounded-full h-1.5">
+                                    <div class="bg-brand-500 h-1.5 rounded-full transition-all duration-500" style="width: ${((state.activeModule + 1) / course.modulesList.length) * 100}%"></div>
                                 </div>
-                                <p class="text-xs text-slate-500 mt-1">${state.activeModule + 1} of ${course.modulesList.length} modules completed</p>
                             </div>
                             <div class="flex-1 overflow-y-auto">
-                                ${course.modulesList.map((mod, index) => `
+                                ${course.modulesList.map((mod, index) => {
+                                    let statusIcon = '';
+                                    let activeClass = '';
+                                    
+                                    if (index === state.activeModule) {
+                                        statusIcon = '<i class="fa-solid fa-play-circle text-brand-500 text-lg"></i>';
+                                        activeClass = 'bg-brand-50 border-l-4 border-l-brand-500';
+                                    } else if (mod.completed) {
+                                        statusIcon = '<i class="fa-solid fa-circle-check text-green-500"></i>';
+                                        activeClass = 'border-l-4 border-l-transparent opacity-70';
+                                    } else {
+                                        statusIcon = '<i class="fa-regular fa-circle text-slate-300"></i>';
+                                        activeClass = 'border-l-4 border-l-transparent hover:bg-slate-50';
+                                    }
+
+                                    // MOVE Badge color
+                                    let moveBadge = '';
+                                    if(mod.moveElement === 'M') moveBadge = '<span class="w-5 h-5 rounded bg-move-m text-white text-[10px] flex items-center justify-center font-bold">M</span>';
+                                    if(mod.moveElement === 'O') moveBadge = '<span class="w-5 h-5 rounded bg-move-o text-white text-[10px] flex items-center justify-center font-bold">O</span>';
+                                    if(mod.moveElement === 'V') moveBadge = '<span class="w-5 h-5 rounded bg-move-v text-white text-[10px] flex items-center justify-center font-bold">V</span>';
+                                    if(mod.moveElement === 'E') moveBadge = '<span class="w-5 h-5 rounded bg-move-e text-white text-[10px] flex items-center justify-center font-bold">E</span>';
+
+                                    return `
                                     <button onclick="router.navigate('course-player', {courseId: '${course.id}', moduleId: ${index}})" 
-                                        class="w-full text-left p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-3 ${index === state.activeModule ? 'bg-brand-50 border-l-4 border-l-brand-500' : 'border-l-4 border-l-transparent'}">
-                                        <div class="mt-1">
-                                            ${mod.completed ? 
-                                                '<i class="fa-solid fa-circle-check text-green-500"></i>' : 
-                                                (index === state.activeModule ? '<i class="fa-solid fa-play-circle text-brand-500"></i>' : '<i class="fa-regular fa-circle text-slate-300"></i>')
-                                            }
+                                        class="w-full text-left p-4 border-b border-slate-50 transition-colors flex items-start gap-3 ${activeClass}">
+                                        <div class="mt-0.5 flex-shrink-0 w-6">
+                                            ${statusIcon}
                                         </div>
-                                        <div class="flex-1">
-                                            <p class="text-sm font-semibold ${index === state.activeModule ? 'text-brand-700' : 'text-slate-700'}">${mod.title}</p>
-                                            <div class="flex items-center gap-2 mt-1">
-                                                <span class="text-[10px] text-slate-400 uppercase font-bold">${mod.type}</span>
-                                                <span class="text-[10px] text-slate-400">${mod.duration}</span>
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                ${moveBadge}
+                                                <p class="text-xs font-bold ${index === state.activeModule ? 'text-brand-700' : 'text-slate-400'} uppercase">${mod.type}</p>
                                             </div>
+                                            <p class="text-sm font-semibold ${index === state.activeModule ? 'text-slate-900' : 'text-slate-600'} leading-tight line-clamp-2">${mod.title}</p>
                                         </div>
                                     </button>
-                                `).join('')}
+                                    `;
+                                }).join('')}
                             </div>
                             <div class="p-4 border-t border-slate-100 bg-slate-50">
-                                <button onclick="coursePlayer.completeModule()" class="w-full bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
-                                    Mark as Complete & Continue
+                                <button onclick="coursePlayer.completeModule()" class="w-full bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2">
+                                    ${state.activeModule === course.modulesList.length - 1 ? 'Finish Course' : 'Mark Complete & Next'} <i class="fa-solid fa-arrow-right"></i>
                                 </button>
                             </div>
                         </div>
@@ -693,69 +846,43 @@
                             <!-- Skill Card 1 -->
                             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                                 <div class="flex items-center gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                    <div class="w-12 h-12 rounded-full bg-move-m/10 text-move-m flex items-center justify-center text-xl">
                                         <i class="fa-solid fa-brain"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-bold text-slate-800">Systems Thinking</h3>
-                                        <p class="text-xs text-slate-500">Level 4 • Expert</p>
+                                        <h3 class="font-bold text-slate-800">Mastering the Moment</h3>
+                                        <p class="text-xs text-slate-500">Presence & Triage</p>
                                     </div>
                                 </div>
                                 <div class="space-y-2">
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-slate-600">Causal Loop Diagrams</span>
-                                        <span class="font-bold text-slate-800">85%</span>
+                                        <span class="text-slate-600">Uncertainty Navigation</span>
+                                        <span class="font-bold text-slate-800">75%</span>
                                     </div>
                                     <div class="w-full bg-slate-100 rounded-full h-2">
-                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                        <div class="bg-move-m h-2 rounded-full" style="width: 75%"></div>
                                     </div>
-                                </div>
-                                <div class="mt-4 flex gap-2">
-                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Finance</span>
-                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Policy</span>
                                 </div>
                             </div>
 
                             <!-- Skill Card 2 -->
                             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
                                 <div class="flex items-center gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
-                                        <i class="fa-solid fa-bolt"></i>
+                                    <div class="w-12 h-12 rounded-full bg-move-o/10 text-move-o flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-lightbulb"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-bold text-slate-800">Real-Time Leadership</h3>
-                                        <p class="text-xs text-slate-500">Level 3 • Advanced</p>
+                                        <h3 class="font-bold text-slate-800">Opening Options</h3>
+                                        <p class="text-xs text-slate-500">Ideation & Safety</p>
                                     </div>
                                 </div>
                                 <div class="space-y-2">
                                     <div class="flex justify-between text-sm">
-                                        <span class="text-slate-600">MOVE Framework</span>
-                                        <span class="font-bold text-slate-800">60%</span>
+                                        <span class="text-slate-600">Rapid Brainstorming</span>
+                                        <span class="font-bold text-slate-800">40%</span>
                                     </div>
                                     <div class="w-full bg-slate-100 rounded-full h-2">
-                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                             <!-- Skill Card 3 -->
-                             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                                <div class="flex items-center gap-4 mb-4">
-                                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
-                                        <i class="fa-solid fa-shield-heart"></i>
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-slate-800">Risk Management</h3>
-                                        <p class="text-xs text-slate-500">Level 2 • Intermediate</p>
-                                    </div>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between text-sm">
-                                        <span class="text-slate-600">Resilience Planning</span>
-                                        <span class="font-bold text-slate-800">45%</span>
-                                    </div>
-                                    <div class="w-full bg-slate-100 rounded-full h-2">
-                                        <div class="bg-emerald-500 h-2 rounded-full" style="width: 45%"></div>
+                                        <div class="bg-move-o h-2 rounded-full" style="width: 40%"></div>
                                     </div>
                                 </div>
                             </div>
@@ -764,19 +891,19 @@
                         <!-- Badges -->
                         <h2 class="text-xl font-bold text-slate-800 mt-8 mb-4">Achievements</h2>
                         <div class="flex gap-4 overflow-x-auto pb-4">
-                            <div class="min-w-[120px] bg-white p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
-                                <div class="w-16 h-16 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-2xl mb-2">
-                                    <i class="fa-solid fa-fire"></i>
+                            <div class="min-w-[140px] bg-white p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                                <div class="w-16 h-16 rounded-full bg-move-m/10 text-move-m flex items-center justify-center text-2xl mb-2">
+                                    <i class="fa-solid fa-m"></i>
                                 </div>
-                                <h4 class="font-bold text-sm text-slate-800">Fast Starter</h4>
-                                <p class="text-[10px] text-slate-500">Completed 1st module</p>
+                                <h4 class="font-bold text-sm text-slate-800">Moment Master</h4>
+                                <p class="text-[10px] text-slate-500">Completed Module 1</p>
                             </div>
-                            <div class="min-w-[120px] bg-white p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center opacity-50">
-                                <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-2xl mb-2">
-                                    <i class="fa-solid fa-medal"></i>
+                            <div class="min-w-[140px] bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center text-center opacity-60">
+                                <div class="w-16 h-16 rounded-full bg-slate-200 text-slate-400 flex items-center justify-center text-2xl mb-2">
+                                    <i class="fa-solid fa-o"></i>
                                 </div>
-                                <h4 class="font-bold text-sm text-slate-800">Top Performer</h4>
-                                <p class="text-[10px] text-slate-500">Score 100% on quiz</p>
+                                <h4 class="font-bold text-sm text-slate-800">Option Opener</h4>
+                                <p class="text-[10px] text-slate-500">Locked</p>
                             </div>
                         </div>
                     </div>
@@ -793,8 +920,8 @@
                                 <i class="fa-solid fa-certificate"></i>
                             </div>
                             <h2 class="text-2xl font-bold text-slate-800 mb-2">No Certificates Yet</h2>
-                            <p class="text-slate-500 mb-8">Complete a course to earn your first digital certificate.</p>
-                            <button onclick="router.navigate('courses')" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-brand-700">Browse Courses</button>
+                            <p class="text-slate-500 mb-8 max-w-md mx-auto">Complete the Real-Time Leadership course to earn your official MOVE Framework certification.</p>
+                            <button onclick="router.navigate('course-player', {courseId: 'rtl-101'})" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-brand-700">Continue Learning</button>
                         </div>
                     `;
                 }
@@ -804,19 +931,21 @@
                         <h1 class="text-2xl font-bold text-slate-800 mb-6">My Certificates</h1>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             ${myCerts.map(cert => `
-                                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-                                    <div class="h-40 bg-slate-100 flex items-center justify-center relative">
-                                        <i class="fa-solid fa-certificate text-6xl text-brand-200"></i>
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-shadow">
+                                    <div class="h-48 bg-slate-100 flex items-center justify-center relative bg-gradient-to-br from-slate-100 to-slate-200">
+                                        <i class="fa-solid fa-certificate text-6xl text-brand-200/50"></i>
                                         <div class="absolute inset-0 flex items-center justify-center">
-                                            <span class="bg-white/90 px-3 py-1 rounded text-xs font-bold text-brand-800 shadow-sm">RTL Center</span>
+                                            <div class="w-20 h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-seal text-brand-600 text-3xl"></i>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="p-5">
-                                        <h3 class="font-bold text-slate-800 mb-1">${cert.courseName}</h3>
+                                    <div class="p-6">
+                                        <h3 class="font-bold text-slate-800 mb-1 line-clamp-1">${cert.courseName}</h3>
                                         <p class="text-sm text-slate-500 mb-4">Issued on ${new Date(cert.date).toLocaleDateString()}</p>
                                         <div class="flex gap-2">
                                             <button onclick="certificates.preview('${cert.id}')" class="flex-1 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50">Preview</button>
-                                            <button onclick="certificates.download('${cert.id}')" class="flex-1 py-2 bg-brand-600 text-white rounded-lg text-sm font-semibold hover:bg-brand-700">Download</button>
+                                            <button onclick="certificates.preview('${cert.id}')" class="flex-1 py-2 bg-brand-600 text-white rounded-lg text-sm font-semibold hover:bg-brand-700">Download</button>
                                         </div>
                                     </div>
                                 </div>
@@ -834,7 +963,7 @@
                         <!-- Stats -->
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                                <p class="text-sm text-slate-500 mb-1">Total Learners</p>
+                                <p class="text-sm text-slate-500 mb-1">Active SME Leaders</p>
                                 <h3 class="text-3xl font-bold text-slate-800">142</h3>
                             </div>
                             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
@@ -859,40 +988,9 @@
                             </div>
                             <!-- Chart 2 -->
                             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                                <h3 class="font-bold text-slate-800 mb-4">Quiz Performance by Module</h3>
+                                <h3 class="font-bold text-slate-800 mb-4">Engagement by Module</h3>
                                 <canvas id="quizChart"></canvas>
                             </div>
-                        </div>
-
-                        <!-- Recent Activity -->
-                        <div class="mt-8 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
-                            <div class="p-6 border-b border-slate-100">
-                                <h3 class="font-bold text-slate-800">Recent Forum Activity</h3>
-                            </div>
-                            <table class="w-full text-left text-sm">
-                                <thead class="bg-slate-50 text-slate-500">
-                                    <tr>
-                                        <th class="p-4 font-medium">User</th>
-                                        <th class="p-4 font-medium">Topic</th>
-                                        <th class="p-4 font-medium">Status</th>
-                                        <th class="p-4 font-medium">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-slate-100">
-                                    <tr>
-                                        <td class="p-4">Sarah J.</td>
-                                        <td class="p-4">Master the Moment Question</td>
-                                        <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Pending</span></td>
-                                        <td class="p-4"><button class="text-brand-600 hover:underline">Reply</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-4">Mike T.</td>
-                                        <td class="p-4">Systems Thinking Application</td>
-                                        <td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Resolved</span></td>
-                                        <td class="p-4"><button class="text-brand-600 hover:underline">View</button></td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 `;
@@ -907,66 +1005,91 @@
                 const modalContent = document.getElementById('course-modal-content');
                 
                 modalContent.innerHTML = `
-                    <div class="relative h-48 bg-cover bg-center" style="background-image: url('${course.image}')">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                        <button onclick="ui.closeModal('course-modal')" class="absolute top-4 right-4 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70">
+                    <div class="relative h-64 bg-cover bg-center" style="background-image: url('${course.image}')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent"></div>
+                        <button onclick="ui.closeModal('course-modal')" class="absolute top-4 right-4 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70 transition-colors z-10">
                             <i class="fa-solid fa-times"></i>
                         </button>
-                        <div class="absolute bottom-6 left-6 text-white">
-                            <span class="bg-brand-500 text-xs font-bold px-2 py-1 rounded mb-2 inline-block">${course.framework}</span>
-                            <h2 class="text-2xl font-bold">${course.title}</h2>
+                        <div class="absolute bottom-0 left-0 p-8 text-white w-full">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="bg-brand-500 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">${course.framework} Framework</span>
+                                <span class="text-xs text-white/80">• ${course.duration}</span>
+                            </div>
+                            <h2 class="text-3xl font-bold mb-2 leading-tight">${course.title}</h2>
+                            ${course.subtitle ? `<p class="text-lg text-white/90 italic mb-4">${course.subtitle}</p>` : ''}
                         </div>
                     </div>
-                    <div class="p-6">
-                        <div class="flex gap-4 mb-6 text-sm text-slate-500">
-                            <span><i class="fa-solid fa-layer-group mr-1"></i> ${course.modules} Modules</span>
-                            <span><i class="fa-solid fa-clock mr-1"></i> ${course.duration}</span>
-                            <span><i class="fa-solid fa-signal mr-1"></i> ${course.level}</span>
+                    <div class="p-8 bg-white">
+                        <div class="flex flex-wrap gap-6 mb-8 text-sm text-slate-600 border-b border-slate-100 pb-6">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-users text-brand-500"></i>
+                                <span>${course.targetAudience ? course.targetAudience.join(', ') : 'All Leaders'}</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-layer-group text-brand-500"></i>
+                                <span>${course.modules} Modules</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-signal text-brand-500"></i>
+                                <span>${course.level}</span>
+                            </div>
                         </div>
-                        <p class="text-slate-600 mb-6">${course.description}</p>
                         
-                        <h3 class="font-bold text-slate-800 mb-3">What you'll learn</h3>
-                        <ul class="space-y-2 mb-8">
-                            <li class="flex items-start gap-2 text-sm text-slate-600">
-                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Master the ${course.framework} framework
-                            </li>
-                            <li class="flex items-start gap-2 text-sm text-slate-600">
-                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Practical tools for immediate application
-                            </li>
-                            <li class="flex items-start gap-2 text-sm text-slate-600">
-                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Certificate of completion
-                            </li>
-                        </ul>
-
-                        <div class="flex gap-3">
-                            <button onclick="ui.closeModal('course-modal'); router.navigate('course-player', {courseId: '${course.id}'})" class="flex-1 bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors">
-                                Start Learning
-                            </button>
-                            <button class="px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50">
-                                <i class="fa-regular fa-heart"></i>
-                            </button>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="md:col-span-2">
+                                <h3 class="font-bold text-slate-800 mb-3 text-lg">About this Course</h3>
+                                <p class="text-slate-600 mb-6 leading-relaxed">${course.description}</p>
+                                
+                                <h3 class="font-bold text-slate-800 mb-3">What you will learn</h3>
+                                <ul class="space-y-3 mb-6">
+                                    <li class="flex items-start gap-3 text-slate-600">
+                                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                                        <span>Master the ${course.framework} framework for crisis leadership</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-slate-600">
+                                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                                        <span>Practical tools for immediate application in high-pressure scenarios</span>
+                                    </li>
+                                    <li class="flex items-start gap-3 text-slate-600">
+                                        <i class="fa-solid fa-check text-brand-500 mt-1"></i>
+                                        <span>Strategies for remote team resilience and data-informed decisions</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-slate-50 p-6 rounded-xl h-fit">
+                                <h4 class="font-bold text-slate-800 mb-4">Course Includes</h4>
+                                <ul class="space-y-3 text-sm text-slate-600 mb-6">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-video text-slate-400 w-5"></i> 8 Video Modules</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-file-download text-slate-400 w-5"></i> 8 Downloadable Tools</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-comments text-slate-400 w-5"></i> Community Forum</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-certificate text-slate-400 w-5"></i> Certificate</li>
+                                </ul>
+                                <button onclick="ui.closeModal('course-modal'); router.navigate('course-player', {courseId: '${course.id}'})" class="w-full bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
+                                    Start Learning Now
+                                </button>
+                            </div>
                         </div>
                     </div>
                 `;
                 
                 document.getElementById('course-modal').classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // Prevent background scrolling
             },
             closeModal(id) {
                 document.getElementById(id).classList.add('hidden');
+                document.body.style.overflow = '';
             }
         };
 
         const coursePlayer = {
             completeModule() {
                 const course = db.courses.find(c => c.id === state.activeCourse);
-                // Mark current complete
                 course.modulesList[state.activeModule].completed = true;
                 
-                // Check if all complete
                 const allComplete = course.modulesList.every(m => m.completed);
                 
                 if (allComplete) {
-                    // Generate Certificate
                     const certId = 'CERT-' + Date.now();
                     db.certificates.push({
                         id: certId,
@@ -975,10 +1098,9 @@
                         courseName: course.title,
                         date: new Date().toISOString()
                     });
-                    alert('Congratulations! You have completed the course. Your certificate has been generated.');
+                    alert('Congratulations! You have completed the Real-Time Leadership course. Your MOVE Framework Certificate has been generated.');
                     router.navigate('certificates');
                 } else {
-                    // Next module
                     if (state.activeModule < course.modulesList.length - 1) {
                         router.navigate('course-player', {courseId: state.activeCourse, moduleId: state.activeModule + 1});
                     }
@@ -992,36 +1114,46 @@
                 const user = state.currentUser;
                 
                 const html = `
-                    <div id="cert-capture-area" class="bg-white p-12 border-8 border-brand-900 text-center relative" style="width: 800px; height: 600px; font-family: serif;">
+                    <div id="cert-capture-area" class="bg-white p-12 border-[12px] border-brand-900 text-center relative shadow-2xl" style="width: 800px; height: 600px; font-family: 'Times New Roman', serif;">
                         <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: radial-gradient(#0c4a6e 1px, transparent 1px); background-size: 20px 20px;"></div>
                         
-                        <div class="border-4 border-double border-brand-900 p-8 h-full flex flex-col justify-between relative">
-                            <div class="absolute top-4 left-4 text-brand-900 opacity-20 text-6xl">
+                        <div class="border-4 border-double border-brand-900/30 p-8 h-full flex flex-col justify-between relative">
+                            <div class="absolute top-6 left-6 text-brand-900 opacity-10 text-6xl">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div class="absolute bottom-6 right-6 text-brand-900 opacity-10 text-6xl rotate-180">
                                 <i class="fa-solid fa-shield-halved"></i>
                             </div>
                             
-                            <div>
-                                <h1 class="text-4xl font-bold text-brand-900 uppercase tracking-widest mb-2">Certificate</h1>
-                                <h2 class="text-xl text-slate-500 uppercase tracking-wide">of Completion</h2>
+                            <div class="mt-4">
+                                <h1 class="text-5xl font-bold text-brand-900 uppercase tracking-widest mb-2" style="font-family: serif;">Certificate</h1>
+                                <h2 class="text-xl text-slate-500 uppercase tracking-[0.3em]">of Completion</h2>
                             </div>
 
-                            <div class="my-8">
-                                <p class="text-lg text-slate-600 mb-4">This is to certify that</p>
-                                <h2 class="text-4xl font-bold text-slate-900 mb-4" style="font-family: cursive;">${user.name}</h2>
-                                <p class="text-lg text-slate-600 mb-4">has successfully completed the course</p>
-                                <h3 class="text-2xl font-bold text-brand-800">"${cert.courseName}"</h3>
-                            </div>
-
-                            <div class="flex justify-between items-end mt-12">
-                                <div class="text-left">
-                                    <p class="text-sm text-slate-400">Date Issued</p>
-                                    <p class="font-bold text-slate-800">${new Date(cert.date).toLocaleDateString()}</p>
+                            <div class="my-8 relative z-10">
+                                <p class="text-lg text-slate-600 mb-2 font-serif italic">This certifies that</p>
+                                <h2 class="text-5xl font-bold text-slate-900 my-4" style="font-family: 'Brush Script MT', cursive;">${user.name}</h2>
+                                <p class="text-lg text-slate-600 mb-4 font-serif">has successfully completed the professional course</p>
+                                <h3 class="text-2xl font-bold text-brand-800 px-12 leading-relaxed">"${cert.courseName}"</h3>
+                                <div class="mt-4 inline-block px-4 py-1 bg-brand-50 text-brand-800 text-sm font-bold rounded-full border border-brand-200">
+                                    MOVE Framework Certified
                                 </div>
-                                <div class="w-24 h-24 bg-brand-900 rounded-full flex items-center justify-center text-white text-4xl shadow-xl">
+                            </div>
+
+                            <div class="flex justify-between items-end mt-8 px-8 relative z-10">
+                                <div class="text-center">
+                                    <div class="w-32 h-px bg-slate-400 mb-2"></div>
+                                    <p class="text-xs text-slate-500 uppercase">Date Issued</p>
+                                    <p class="font-bold text-slate-800 font-serif">${new Date(cert.date).toLocaleDateString()}</p>
+                                </div>
+                                
+                                <div class="w-28 h-28 bg-brand-900 rounded-full flex items-center justify-center text-white text-4xl shadow-xl border-4 border-white">
                                     <i class="fa-solid fa-seal"></i>
                                 </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-slate-400">Certificate ID</p>
+                                
+                                <div class="text-center">
+                                    <div class="w-32 h-px bg-slate-400 mb-2"></div>
+                                    <p class="text-xs text-slate-500 uppercase">Certification ID</p>
                                     <p class="font-bold text-slate-800 font-mono text-xs">${cert.id}</p>
                                 </div>
                             </div>
@@ -1031,16 +1163,14 @@
                 
                 document.getElementById('cert-preview-area').innerHTML = html;
                 document.getElementById('cert-modal').classList.remove('hidden');
-                
-                // Store current cert ID for download
                 window.currentCertId = certId;
             },
             
             downloadCurrent() {
                 const element = document.getElementById('cert-capture-area');
-                html2canvas(element, { scale: 2 }).then(canvas => {
+                html2canvas(element, { scale: 2, backgroundColor: null }).then(canvas => {
                     const link = document.createElement('a');
-                    link.download = `Certificate-${window.currentCertId}.png`;
+                    link.download = `RTL-Certificate-${window.currentCertId}.png`;
                     link.href = canvas.toDataURL();
                     link.click();
                 });
