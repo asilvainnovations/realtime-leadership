@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTL Center - Professional Development LMS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- html2canvas for Certificates -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            500: '#8b5cf6', // Violet
+                            600: '#7c3aed',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Certificate Template Styles */
+        #certificate-template {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            border: 10px solid #0c4a6e;
+            font-family: 'Times New Roman', serif;
+        }
+        .cert-seal {
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #fbbf24 0%, #d97706 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen overflow-hidden flex">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-white flex flex-col transition-all duration-300 z-20 shadow-xl">
+        <div class="p-6 flex items-center gap-3 border-b border-slate-700">
+            <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-bolt text-white"></i>
+            </div>
+            <span class="font-bold text-xl tracking-tight">RTL Center</span>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1 px-3">
+                <li>
+                    <button onclick="router.navigate('dashboard')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-chart-pie w-5"></i> Dashboard
+                    </button>
+                </li>
+                <li>
+                    <button onclick="router.navigate('courses')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-graduation-cap w-5"></i> My Courses
+                    </button>
+                </li>
+                <li>
+                    <button onclick="router.navigate('skills')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-layer-group w-5"></i> Skills
+                    </button>
+                </li>
+                <li>
+                    <button onclick="router.navigate('certificates')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-certificate w-5"></i> Certificates
+                    </button>
+                </li>
+                <li id="admin-nav-item" class="hidden">
+                    <button onclick="router.navigate('admin')" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-slate-800 transition-colors text-slate-300 hover:text-white">
+                        <i class="fa-solid fa-user-shield w-5"></i> Admin Panel
+                    </button>
+                </li>
+            </ul>
+
+            <div class="mt-8 px-6">
+                <p class="text-xs font-semibold text-slate-500 uppercase mb-2">Specializations</p>
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
+                        <i class="fa-solid fa-circle text-[8px] text-brand-500"></i> Systems Thinking
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
+                        <i class="fa-solid fa-circle text-[8px] text-accent-500"></i> Real-Time Leadership
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
+                        <i class="fa-solid fa-circle text-[8px] text-emerald-500"></i> Risk Management
+                    </div>
+                    <div class="flex items-center gap-2 text-xs text-slate-400 px-2">
+                        <i class="fa-solid fa-circle text-[8px] text-rose-500"></i> AI Analytics
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="p-4 border-t border-slate-700">
+            <button onclick="auth.logout()" class="flex items-center gap-3 text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Log Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <div class="flex-1 flex flex-col h-screen overflow-hidden relative">
+        
+        <!-- HEADER -->
+        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 shadow-sm z-10">
+            <div class="flex items-center gap-4">
+                <button id="mobile-menu-btn" class="lg:hidden text-slate-500 hover:text-slate-700">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <div class="relative hidden md:block">
+                    <i class="fa-solid fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" placeholder="Search courses, skills..." class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none w-64 transition-all">
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <button class="relative p-2 text-slate-400 hover:text-brand-600 transition-colors">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="flex items-center gap-3 pl-4 border-l border-slate-200">
+                    <div class="text-right hidden sm:block">
+                        <p id="user-name-display" class="text-sm font-semibold text-slate-700">Guest User</p>
+                        <p id="user-role-display" class="text-xs text-slate-500">Learner</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-500 to-accent-500 flex items-center justify-center text-white font-bold shadow-md cursor-pointer" onclick="router.navigate('profile')">
+                        <span id="user-avatar-initial">G</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DYNAMIC CONTENT AREA -->
+        <main id="app-content" class="flex-1 overflow-y-auto bg-slate-50 p-6 relative">
+            <!-- Views will be injected here via JS -->
+        </main>
+
+    </div>
+
+    <!-- MODALS -->
+    
+    <!-- Course Details Modal -->
+    <div id="course-modal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="ui.closeModal('course-modal')"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden fade-in">
+            <div id="course-modal-content" class="p-0">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Preview Modal -->
+    <div id="cert-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 backdrop-blur-sm">
+        <div class="bg-white p-4 rounded-lg shadow-2xl max-w-4xl w-full">
+            <div id="cert-preview-area" class="mb-4 flex justify-center">
+                <!-- Certificate injected here -->
+            </div>
+            <div class="flex justify-end gap-3">
+                <button onclick="ui.closeModal('cert-modal')" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-lg">Close</button>
+                <button onclick="certificates.downloadCurrent()" class="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA STORE ---
+        const db = {
+            courses: [
+                {
+                    id: 'rtl-101',
+                    title: 'Real-Time Leadership for Resilient Organizations',
+                    category: 'Leadership',
+                    level: 'Advanced',
+                    modules: 9,
+                    duration: '12h 30m',
+                    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                    description: 'Master the MOVE framework to lead effectively in crisis and uncertainty. Designed for government and non-profit leaders.',
+                    framework: 'MOVE',
+                    modulesList: [
+                        { id: 0, title: 'Module 0: Introduction to Crisis Leadership', type: 'video', duration: '15:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 1, title: 'Module 1: Master the Moment (Mindfulness)', type: 'video', duration: '45:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 2, title: 'Module 2: Generate Options (Strategic Thinking)', type: 'video', duration: '50:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 3, title: 'Module 3: Validate Choices (Data-Driven Decisions)', type: 'video', duration: '40:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 4, title: 'Module 4: Engage & Execute (Team Mobilization)', type: 'video', duration: '55:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 5, title: 'Module 5: Systems Thinking in Government', type: 'reading', duration: '30:00', content: 'Systems thinking is crucial for local government finance...', completed: false },
+                        { id: 6, title: 'Module 6: Integrated Risk Management', type: 'video', duration: '60:00', url: 'https://www.youtube.com/embed/ScMzIvxBSi4', completed: false },
+                        { id: 7, title: 'Module 7: AI-Driven Performance Analytics', type: 'interactive', duration: '45:00', completed: false },
+                        { id: 8, title: 'Module 8: Final Assessment & Capstone', type: 'quiz', duration: '30:00', completed: false }
+                    ]
+                },
+                {
+                    id: 'st-201',
+                    title: 'Systems Thinking in Local Government Finance',
+                    category: 'Finance',
+                    level: 'Intermediate',
+                    modules: 6,
+                    duration: '8h 15m',
+                    image: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                    description: 'Understand the interconnectedness of budget, expenditure, and public service delivery.',
+                    framework: 'Systems Dynamics'
+                },
+                {
+                    id: 'ai-301',
+                    title: 'AI-Driven Performance Data Analytics',
+                    category: 'Technology',
+                    level: 'Beginner',
+                    modules: 8,
+                    duration: '10h 00m',
+                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80',
+                    description: 'Leverage AI tools to analyze performance metrics and drive strategic decisions.',
+                    framework: 'Data Science'
+                }
+            ],
+            forum: [
+                { id: 1, courseId: 'rtl-101', moduleId: 1, user: 'Sarah J.', role: 'learner', text: 'How do you apply "Master the Moment" when you have 5 back-to-back meetings?', likes: 12, replies: 3, isSolution: false },
+                { id: 2, courseId: 'rtl-101', moduleId: 1, user: 'Instructor Mike', role: 'instructor', text: 'Great question Sarah. The key is micro-mindfulness...', likes: 24, replies: 0, isSolution: true }
+            ],
+            users: [
+                { id: 1, name: 'Admin User', email: 'admin@rtl.com', password: 'admin123', role: 'admin', enrolled: ['rtl-101', 'st-201'] },
+                { id: 2, name: 'Demo Learner', email: 'demo@rtl.com', password: 'demo123', role: 'learner', enrolled: ['rtl-101'] }
+            ],
+            certificates: []
+        };
+
+        // --- STATE MANAGEMENT ---
+        const state = {
+            currentUser: null,
+            currentView: 'login',
+            activeCourse: null,
+            activeModule: 0
+        };
+
+        // --- AUTHENTICATION SYSTEM ---
+        const auth = {
+            init() {
+                const saved = localStorage.getItem('rtl_user');
+                if (saved) {
+                    state.currentUser = JSON.parse(saved);
+                    this.updateUI();
+                    router.navigate('dashboard');
+                } else {
+                    router.navigate('login');
+                }
+            },
+            login(email, password) {
+                const user = db.users.find(u => u.email === email && u.password === password);
+                if (user) {
+                    state.currentUser = user;
+                    localStorage.setItem('rtl_user', JSON.stringify(user));
+                    this.updateUI();
+                    router.navigate('dashboard');
+                    return true;
+                }
+                return false;
+            },
+            logout() {
+                state.currentUser = null;
+                localStorage.removeItem('rtl_user');
+                router.navigate('login');
+            },
+            updateUI() {
+                if (state.currentUser) {
+                    document.getElementById('user-name-display').innerText = state.currentUser.name;
+                    document.getElementById('user-role-display').innerText = state.currentUser.role === 'admin' ? 'Administrator' : 'Learner';
+                    document.getElementById('user-avatar-initial').innerText = state.currentUser.name.charAt(0);
+                    
+                    if (state.currentUser.role === 'admin') {
+                        document.getElementById('admin-nav-item').classList.remove('hidden');
+                    }
+                }
+            }
+        };
+
+        // --- ROUTER ---
+        const router = {
+            navigate(view, params = {}) {
+                state.currentView = view;
+                const app = document.getElementById('app-content');
+                app.innerHTML = ''; // Clear content
+
+                // Update Active Nav
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('bg-slate-800', 'text-white');
+                    btn.classList.add('text-slate-300');
+                });
+
+                switch(view) {
+                    case 'login':
+                        app.innerHTML = views.login();
+                        break;
+                    case 'dashboard':
+                        app.innerHTML = views.dashboard();
+                        break;
+                    case 'courses':
+                        app.innerHTML = views.courses();
+                        break;
+                    case 'course-player':
+                        state.activeCourse = params.courseId;
+                        state.activeModule = params.moduleId || 0;
+                        app.innerHTML = views.coursePlayer();
+                        break;
+                    case 'skills':
+                        app.innerHTML = views.skills();
+                        break;
+                    case 'certificates':
+                        app.innerHTML = views.certificates();
+                        break;
+                    case 'admin':
+                        app.innerHTML = views.admin();
+                        break;
+                }
+            }
+        };
+
+        // --- UI VIEWS GENERATORS ---
+        const views = {
+            login() {
+                return `
+                    <div class="flex items-center justify-center h-full fade-in">
+                        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-slate-100">
+                            <div class="text-center mb-8">
+                                <div class="w-16 h-16 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                </div>
+                                <h2 class="text-2xl font-bold text-slate-800">Welcome Back</h2>
+                                <p class="text-slate-500">Sign in to continue your learning journey</p>
+                            </div>
+                            <form onsubmit="event.preventDefault(); handleLogin();" class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                                    <input type="email" id="login-email" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="admin@rtl.com or demo@rtl.com" value="demo@rtl.com">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                                    <input type="password" id="login-pass" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="••••••" value="demo123">
+                                </div>
+                                <button type="submit" class="w-full bg-brand-600 text-white py-2.5 rounded-lg font-semibold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/30">
+                                    Sign In
+                                </button>
+                            </form>
+                            <div class="mt-6 text-center text-xs text-slate-400">
+                                <p>Demo Credentials:</p>
+                                <p>Learner: demo@rtl.com / demo123</p>
+                                <p>Admin: admin@rtl.com / admin123</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            dashboard() {
+                const enrolledCourses = db.courses.filter(c => state.currentUser.enrolled.includes(c.id));
+                const progress = Math.floor(Math.random() * 100); // Simulated progress
+                
+                return `
+                    <div class="max-w-6xl mx-auto space-y-8 fade-in">
+                        <!-- Hero -->
+                        <div class="bg-gradient-to-r from-brand-900 to-slate-900 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div>
+                                    <h1 class="text-3xl font-bold mb-2">Hello, ${state.currentUser.name}!</h1>
+                                    <p class="text-brand-100 mb-6 max-w-lg">Continue your journey in Real-Time Leadership. You are making great progress on your MOVE framework certification.</p>
+                                    <button onclick="router.navigate('courses')" class="bg-white text-brand-900 px-6 py-2.5 rounded-lg font-bold hover:bg-brand-50 transition-colors shadow-lg">
+                                        Continue Learning
+                                    </button>
+                                </div>
+                                <div class="bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 min-w-[250px]">
+                                    <div class="flex justify-between items-end mb-2">
+                                        <span class="text-sm font-medium text-brand-100">Weekly Goal</span>
+                                        <span class="text-2xl font-bold">85%</span>
+                                    </div>
+                                    <div class="w-full bg-black/30 rounded-full h-2.5">
+                                        <div class="bg-brand-400 h-2.5 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                    <p class="text-xs text-brand-200 mt-3">4.5 hours studied this week</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-book-open"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 text-sm">Courses in Progress</p>
+                                    <h3 class="text-2xl font-bold text-slate-800">${enrolledCourses.length}</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-certificate"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 text-sm">Certificates Earned</p>
+                                    <h3 class="text-2xl font-bold text-slate-800">${db.certificates.filter(c => c.userId === state.currentUser.id).length}</h3>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-slate-500 text-sm">Skill Points</p>
+                                    <h3 class="text-2xl font-bold text-slate-800">1,240</h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Continue Learning -->
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800 mb-4">Continue Learning</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                ${enrolledCourses.map(course => `
+                                    <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden flex flex-col sm:flex-row hover:shadow-md transition-shadow">
+                                        <div class="sm:w-1/3 h-32 sm:h-auto bg-cover bg-center" style="background-image: url('${course.image}')"></div>
+                                        <div class="p-5 flex-1 flex flex-col justify-between">
+                                            <div>
+                                                <div class="flex justify-between items-start mb-1">
+                                                    <span class="text-xs font-bold text-brand-600 bg-brand-50 px-2 py-1 rounded">${course.category}</span>
+                                                    <span class="text-xs text-slate-400">${course.duration}</span>
+                                                </div>
+                                                <h3 class="font-bold text-slate-800 mb-2 line-clamp-1">${course.title}</h3>
+                                                <div class="w-full bg-slate-100 rounded-full h-1.5 mb-1">
+                                                    <div class="bg-brand-500 h-1.5 rounded-full" style="width: ${progress}%"></div>
+                                                </div>
+                                                <p class="text-xs text-slate-500 text-right">${progress}% Complete</p>
+                                            </div>
+                                            <button onclick="router.navigate('course-player', {courseId: '${course.id}'})" class="mt-3 w-full py-2 border border-brand-600 text-brand-600 rounded-lg text-sm font-semibold hover:bg-brand-50 transition-colors">
+                                                Resume Course
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            courses() {
+                return `
+                    <div class="max-w-6xl mx-auto fade-in">
+                        <div class="flex justify-between items-center mb-8">
+                            <div>
+                                <h1 class="text-2xl font-bold text-slate-800">Course Library</h1>
+                                <p class="text-slate-500">Explore specialized tracks for resilient organizations</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-filter mr-2"></i>Filter</button>
+                                <button class="px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-sort mr-2"></i>Sort</button>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${db.courses.map(course => `
+                                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden group hover:shadow-xl transition-all duration-300">
+                                    <div class="h-48 overflow-hidden relative">
+                                        <img src="${course.image}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                                            <button onclick="ui.openCourseModal('${course.id}')" class="bg-white text-slate-900 px-4 py-2 rounded-lg text-sm font-bold w-full">View Details</button>
+                                        </div>
+                                        <div class="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-slate-800">
+                                            ${course.level}
+                                        </div>
+                                    </div>
+                                    <div class="p-5">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="text-xs font-semibold text-brand-600 uppercase tracking-wider">${course.framework}</span>
+                                            <span class="text-slate-300">•</span>
+                                            <span class="text-xs text-slate-500">${course.modules} Modules</span>
+                                        </div>
+                                        <h3 class="font-bold text-lg text-slate-800 mb-2 line-clamp-2 h-12">${course.title}</h3>
+                                        <p class="text-sm text-slate-500 mb-4 line-clamp-2">${course.description}</p>
+                                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                                            <div class="flex -space-x-2">
+                                                <div class="w-8 h-8 rounded-full bg-slate-200 border-2 border-white"></div>
+                                                <div class="w-8 h-8 rounded-full bg-slate-300 border-2 border-white"></div>
+                                                <div class="w-8 h-8 rounded-full bg-slate-100 border-2 border-white flex items-center justify-center text-xs text-slate-500 font-bold">+40</div>
+                                            </div>
+                                            <button onclick="ui.openCourseModal('${course.id}')" class="text-brand-600 font-semibold text-sm hover:underline">Details <i class="fa-solid fa-arrow-right ml-1"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            coursePlayer() {
+                const course = db.courses.find(c => c.id === state.activeCourse);
+                const currentModule = course.modulesList[state.activeModule];
+
+                return `
+                    <div class="h-full flex flex-col lg:flex-row gap-6 fade-in -m-6 p-6 bg-slate-100 h-[calc(100vh-64px)]">
+                        <!-- Video/Content Area -->
+                        <div class="flex-1 flex flex-col bg-white rounded-2xl shadow-sm overflow-hidden">
+                            <div class="aspect-video bg-black relative group">
+                                ${currentModule.type === 'video' ? `
+                                    <iframe id="video-frame" class="w-full h-full" src="${currentModule.url}" frameborder="0" allowfullscreen></iframe>
+                                ` : `
+                                    <div class="w-full h-full flex items-center justify-center bg-slate-900 text-white flex-col p-8 text-center">
+                                        <i class="fa-solid fa-book-open text-4xl mb-4 text-brand-500"></i>
+                                        <h3 class="text-xl font-bold mb-2">${currentModule.title}</h3>
+                                        <p class="text-slate-400 max-w-lg">${currentModule.content || 'Reading content goes here...'}</p>
+                                    </div>
+                                `}
+                            </div>
+                            
+                            <div class="p-6 flex-1 overflow-y-auto">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="px-3 py-1 rounded-full bg-brand-100 text-brand-700 text-xs font-bold uppercase">Module ${currentModule.id}</span>
+                                    <h1 class="text-2xl font-bold text-slate-800">${currentModule.title}</h1>
+                                </div>
+                                
+                                <p class="text-slate-600 mb-6 leading-relaxed">
+                                    In this module, we explore the core concepts of the ${course.framework} framework. 
+                                    Understanding these principles is vital for leading resilient organizations in the public sector.
+                                </p>
+
+                                <!-- Tools & Resources -->
+                                <div class="bg-slate-50 rounded-xl p-5 border border-slate-200 mb-6">
+                                    <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                        <i class="fa-solid fa-toolbox text-brand-500"></i> Tools & Resources
+                                    </h3>
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                        <a href="#" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-brand-300 hover:shadow-sm transition-all">
+                                            <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
+                                            <div>
+                                                <p class="text-sm font-semibold text-slate-700">Module Checklist</p>
+                                                <p class="text-xs text-slate-400">PDF, 24KB</p>
+                                            </div>
+                                        </a>
+                                        <a href="#" class="flex items-center gap-3 p-3 bg-white rounded-lg border border-slate-200 hover:border-brand-300 hover:shadow-sm transition-all">
+                                            <i class="fa-solid fa-file-word text-blue-500 text-xl"></i>
+                                            <div>
+                                                <p class="text-sm font-semibold text-slate-700">Action Template</p>
+                                                <p class="text-xs text-slate-400">DOCX, 156KB</p>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <!-- Discussion Forum -->
+                                <div class="mt-8">
+                                    <h3 class="font-bold text-slate-800 mb-4">Discussion Forum</h3>
+                                    <div class="space-y-4">
+                                        ${db.forum.filter(p => p.moduleId === currentModule.id).map(post => `
+                                            <div class="flex gap-4 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center text-white font-bold text-sm">
+                                                    ${post.user.charAt(0)}
+                                                </div>
+                                                <div class="flex-1">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <span class="font-bold text-slate-800 text-sm">${post.user}</span>
+                                                        ${post.role === 'instructor' ? '<span class="bg-brand-100 text-brand-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase">Instructor</span>' : ''}
+                                                        ${post.isSolution ? '<span class="bg-green-100 text-green-700 text-[10px] px-2 py-0.5 rounded-full font-bold uppercase"><i class="fa-solid fa-check mr-1"></i>Solution</span>' : ''}
+                                                    </div>
+                                                    <p class="text-slate-600 text-sm">${post.text}</p>
+                                                    <div class="mt-2 flex items-center gap-4 text-xs text-slate-400">
+                                                        <button class="hover:text-brand-600"><i class="fa-regular fa-thumbs-up"></i> ${post.likes}</button>
+                                                        <button class="hover:text-brand-600">Reply</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div class="mt-4 flex gap-3">
+                                        <input type="text" placeholder="Ask a question or share insight..." class="flex-1 border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-brand-500">
+                                        <button class="bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-700">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Curriculum -->
+                        <div class="w-full lg:w-80 bg-white rounded-2xl shadow-sm flex flex-col overflow-hidden">
+                            <div class="p-5 border-b border-slate-100 bg-slate-50">
+                                <h3 class="font-bold text-slate-800">Course Content</h3>
+                                <div class="mt-2 w-full bg-slate-200 rounded-full h-2">
+                                    <div class="bg-brand-500 h-2 rounded-full" style="width: ${(state.activeModule / course.modulesList.length) * 100}%"></div>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-1">${state.activeModule + 1} of ${course.modulesList.length} modules completed</p>
+                            </div>
+                            <div class="flex-1 overflow-y-auto">
+                                ${course.modulesList.map((mod, index) => `
+                                    <button onclick="router.navigate('course-player', {courseId: '${course.id}', moduleId: ${index}})" 
+                                        class="w-full text-left p-4 border-b border-slate-50 hover:bg-slate-50 transition-colors flex items-start gap-3 ${index === state.activeModule ? 'bg-brand-50 border-l-4 border-l-brand-500' : 'border-l-4 border-l-transparent'}">
+                                        <div class="mt-1">
+                                            ${mod.completed ? 
+                                                '<i class="fa-solid fa-circle-check text-green-500"></i>' : 
+                                                (index === state.activeModule ? '<i class="fa-solid fa-play-circle text-brand-500"></i>' : '<i class="fa-regular fa-circle text-slate-300"></i>')
+                                            }
+                                        </div>
+                                        <div class="flex-1">
+                                            <p class="text-sm font-semibold ${index === state.activeModule ? 'text-brand-700' : 'text-slate-700'}">${mod.title}</p>
+                                            <div class="flex items-center gap-2 mt-1">
+                                                <span class="text-[10px] text-slate-400 uppercase font-bold">${mod.type}</span>
+                                                <span class="text-[10px] text-slate-400">${mod.duration}</span>
+                                            </div>
+                                        </div>
+                                    </button>
+                                `).join('')}
+                            </div>
+                            <div class="p-4 border-t border-slate-100 bg-slate-50">
+                                <button onclick="coursePlayer.completeModule()" class="w-full bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors shadow-lg shadow-brand-500/30">
+                                    Mark as Complete & Continue
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            skills() {
+                return `
+                    <div class="max-w-5xl mx-auto fade-in">
+                        <h1 class="text-2xl font-bold text-slate-800 mb-6">Skills Development</h1>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Skill Card 1 -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-brain"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-800">Systems Thinking</h3>
+                                        <p class="text-xs text-slate-500">Level 4 • Expert</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-600">Causal Loop Diagrams</span>
+                                        <span class="font-bold text-slate-800">85%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 flex gap-2">
+                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Finance</span>
+                                    <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Policy</span>
+                                </div>
+                            </div>
+
+                            <!-- Skill Card 2 -->
+                            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-bolt"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-800">Real-Time Leadership</h3>
+                                        <p class="text-xs text-slate-500">Level 3 • Advanced</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-600">MOVE Framework</span>
+                                        <span class="font-bold text-slate-800">60%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 60%"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                             <!-- Skill Card 3 -->
+                             <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
+                                        <i class="fa-solid fa-shield-heart"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-slate-800">Risk Management</h3>
+                                        <p class="text-xs text-slate-500">Level 2 • Intermediate</p>
+                                    </div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between text-sm">
+                                        <span class="text-slate-600">Resilience Planning</span>
+                                        <span class="font-bold text-slate-800">45%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-100 rounded-full h-2">
+                                        <div class="bg-emerald-500 h-2 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Badges -->
+                        <h2 class="text-xl font-bold text-slate-800 mt-8 mb-4">Achievements</h2>
+                        <div class="flex gap-4 overflow-x-auto pb-4">
+                            <div class="min-w-[120px] bg-white p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center">
+                                <div class="w-16 h-16 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-2xl mb-2">
+                                    <i class="fa-solid fa-fire"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">Fast Starter</h4>
+                                <p class="text-[10px] text-slate-500">Completed 1st module</p>
+                            </div>
+                            <div class="min-w-[120px] bg-white p-4 rounded-xl border border-slate-100 flex flex-col items-center text-center opacity-50">
+                                <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-2xl mb-2">
+                                    <i class="fa-solid fa-medal"></i>
+                                </div>
+                                <h4 class="font-bold text-sm text-slate-800">Top Performer</h4>
+                                <p class="text-[10px] text-slate-500">Score 100% on quiz</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            },
+
+            certificates() {
+                const myCerts = db.certificates.filter(c => c.userId === state.currentUser.id);
+                
+                if (myCerts.length === 0) {
+                    return `
+                        <div class="max-w-4xl mx-auto text-center py-20 fade-in">
+                            <div class="w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 text-slate-400 text-4xl">
+                                <i class="fa-solid fa-certificate"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800 mb-2">No Certificates Yet</h2>
+                            <p class="text-slate-500 mb-8">Complete a course to earn your first digital certificate.</p>
+                            <button onclick="router.navigate('courses')" class="bg-brand-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-brand-700">Browse Courses</button>
+                        </div>
+                    `;
+                }
+
+                return `
+                    <div class="max-w-6xl mx-auto fade-in">
+                        <h1 class="text-2xl font-bold text-slate-800 mb-6">My Certificates</h1>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            ${myCerts.map(cert => `
+                                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                                    <div class="h-40 bg-slate-100 flex items-center justify-center relative">
+                                        <i class="fa-solid fa-certificate text-6xl text-brand-200"></i>
+                                        <div class="absolute inset-0 flex items-center justify-center">
+                                            <span class="bg-white/90 px-3 py-1 rounded text-xs font-bold text-brand-800 shadow-sm">RTL Center</span>
+                                        </div>
+                                    </div>
+                                    <div class="p-5">
+                                        <h3 class="font-bold text-slate-800 mb-1">${cert.courseName}</h3>
+                                        <p class="text-sm text-slate-500 mb-4">Issued on ${new Date(cert.date).toLocaleDateString()}</p>
+                                        <div class="flex gap-2">
+                                            <button onclick="certificates.preview('${cert.id}')" class="flex-1 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-50">Preview</button>
+                                            <button onclick="certificates.download('${cert.id}')" class="flex-1 py-2 bg-brand-600 text-white rounded-lg text-sm font-semibold hover:bg-brand-700">Download</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            },
+
+            admin() {
+                return `
+                    <div class="max-w-7xl mx-auto fade-in">
+                        <h1 class="text-2xl font-bold text-slate-800 mb-6">Instructor Dashboard</h1>
+                        
+                        <!-- Stats -->
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-sm text-slate-500 mb-1">Total Learners</p>
+                                <h3 class="text-3xl font-bold text-slate-800">142</h3>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-sm text-slate-500 mb-1">Avg. Completion</p>
+                                <h3 class="text-3xl font-bold text-slate-800">68%</h3>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-sm text-slate-500 mb-1">Active Forums</p>
+                                <h3 class="text-3xl font-bold text-slate-800">12</h3>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <p class="text-sm text-slate-500 mb-1">Certificates Issued</p>
+                                <h3 class="text-3xl font-bold text-slate-800">45</h3>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Chart 1 -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-slate-800 mb-4">Course Completion Funnel</h3>
+                                <canvas id="funnelChart"></canvas>
+                            </div>
+                            <!-- Chart 2 -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                                <h3 class="font-bold text-slate-800 mb-4">Quiz Performance by Module</h3>
+                                <canvas id="quizChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="mt-8 bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                            <div class="p-6 border-b border-slate-100">
+                                <h3 class="font-bold text-slate-800">Recent Forum Activity</h3>
+                            </div>
+                            <table class="w-full text-left text-sm">
+                                <thead class="bg-slate-50 text-slate-500">
+                                    <tr>
+                                        <th class="p-4 font-medium">User</th>
+                                        <th class="p-4 font-medium">Topic</th>
+                                        <th class="p-4 font-medium">Status</th>
+                                        <th class="p-4 font-medium">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr>
+                                        <td class="p-4">Sarah J.</td>
+                                        <td class="p-4">Master the Moment Question</td>
+                                        <td class="p-4"><span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs">Pending</span></td>
+                                        <td class="p-4"><button class="text-brand-600 hover:underline">Reply</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4">Mike T.</td>
+                                        <td class="p-4">Systems Thinking Application</td>
+                                        <td class="p-4"><span class="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">Resolved</span></td>
+                                        <td class="p-4"><button class="text-brand-600 hover:underline">View</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }
+        };
+
+        // --- LOGIC CONTROLLERS ---
+
+        const ui = {
+            openCourseModal(courseId) {
+                const course = db.courses.find(c => c.id === courseId);
+                const modalContent = document.getElementById('course-modal-content');
+                
+                modalContent.innerHTML = `
+                    <div class="relative h-48 bg-cover bg-center" style="background-image: url('${course.image}')">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <button onclick="ui.closeModal('course-modal')" class="absolute top-4 right-4 w-8 h-8 bg-black/50 text-white rounded-full flex items-center justify-center hover:bg-black/70">
+                            <i class="fa-solid fa-times"></i>
+                        </button>
+                        <div class="absolute bottom-6 left-6 text-white">
+                            <span class="bg-brand-500 text-xs font-bold px-2 py-1 rounded mb-2 inline-block">${course.framework}</span>
+                            <h2 class="text-2xl font-bold">${course.title}</h2>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex gap-4 mb-6 text-sm text-slate-500">
+                            <span><i class="fa-solid fa-layer-group mr-1"></i> ${course.modules} Modules</span>
+                            <span><i class="fa-solid fa-clock mr-1"></i> ${course.duration}</span>
+                            <span><i class="fa-solid fa-signal mr-1"></i> ${course.level}</span>
+                        </div>
+                        <p class="text-slate-600 mb-6">${course.description}</p>
+                        
+                        <h3 class="font-bold text-slate-800 mb-3">What you'll learn</h3>
+                        <ul class="space-y-2 mb-8">
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Master the ${course.framework} framework
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Practical tools for immediate application
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-slate-600">
+                                <i class="fa-solid fa-check text-green-500 mt-1"></i> Certificate of completion
+                            </li>
+                        </ul>
+
+                        <div class="flex gap-3">
+                            <button onclick="ui.closeModal('course-modal'); router.navigate('course-player', {courseId: '${course.id}'})" class="flex-1 bg-brand-600 text-white py-3 rounded-xl font-bold hover:bg-brand-700 transition-colors">
+                                Start Learning
+                            </button>
+                            <button class="px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('course-modal').classList.remove('hidden');
+            },
+            closeModal(id) {
+                document.getElementById(id).classList.add('hidden');
+            }
+        };
+
+        const coursePlayer = {
+            completeModule() {
+                const course = db.courses.find(c => c.id === state.activeCourse);
+                // Mark current complete
+                course.modulesList[state.activeModule].completed = true;
+                
+                // Check if all complete
+                const allComplete = course.modulesList.every(m => m.completed);
+                
+                if (allComplete) {
+                    // Generate Certificate
+                    const certId = 'CERT-' + Date.now();
+                    db.certificates.push({
+                        id: certId,
+                        userId: state.currentUser.id,
+                        courseId: course.id,
+                        courseName: course.title,
+                        date: new Date().toISOString()
+                    });
+                    alert('Congratulations! You have completed the course. Your certificate has been generated.');
+                    router.navigate('certificates');
+                } else {
+                    // Next module
+                    if (state.activeModule < course.modulesList.length - 1) {
+                        router.navigate('course-player', {courseId: state.activeCourse, moduleId: state.activeModule + 1});
+                    }
+                }
+            }
+        };
+
+        const certificates = {
+            preview(certId) {
+                const cert = db.certificates.find(c => c.id === certId);
+                const user = state.currentUser;
+                
+                const html = `
+                    <div id="cert-capture-area" class="bg-white p-12 border-8 border-brand-900 text-center relative" style="width: 800px; height: 600px; font-family: serif;">
+                        <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" style="background-image: radial-gradient(#0c4a6e 1px, transparent 1px); background-size: 20px 20px;"></div>
+                        
+                        <div class="border-4 border-double border-brand-900 p-8 h-full flex flex-col justify-between relative">
+                            <div class="absolute top-4 left-4 text-brand-900 opacity-20 text-6xl">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            
+                            <div>
+                                <h1 class="text-4xl font-bold text-brand-900 uppercase tracking-widest mb-2">Certificate</h1>
+                                <h2 class="text-xl text-slate-500 uppercase tracking-wide">of Completion</h2>
+                            </div>
+
+                            <div class="my-8">
+                                <p class="text-lg text-slate-600 mb-4">This is to certify that</p>
+                                <h2 class="text-4xl font-bold text-slate-900 mb-4" style="font-family: cursive;">${user.name}</h2>
+                                <p class="text-lg text-slate-600 mb-4">has successfully completed the course</p>
+                                <h3 class="text-2xl font-bold text-brand-800">"${cert.courseName}"</h3>
+                            </div>
+
+                            <div class="flex justify-between items-end mt-12">
+                                <div class="text-left">
+                                    <p class="text-sm text-slate-400">Date Issued</p>
+                                    <p class="font-bold text-slate-800">${new Date(cert.date).toLocaleDateString()}</p>
+                                </div>
+                                <div class="w-24 h-24 bg-brand-900 rounded-full flex items-center justify-center text-white text-4xl shadow-xl">
+                                    <i class="fa-solid fa-seal"></i>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm text-slate-400">Certificate ID</p>
+                                    <p class="font-bold text-slate-800 font-mono text-xs">${cert.id}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('cert-preview-area').innerHTML = html;
+                document.getElementById('cert-modal').classList.remove('hidden');
+                
+                // Store current cert ID for download
+                window.currentCertId = certId;
+            },
+            
+            downloadCurrent() {
+                const element = document.getElementById('cert-capture-area');
+                html2canvas(element, { scale: 2 }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `Certificate-${window.currentCertId}.png`;
+                    link.href = canvas.toDataURL();
+                    link.click();
+                });
+            }
+        };
+
+        // --- GLOBAL HANDLERS ---
+
+        function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-pass').value;
+            
+            if (auth.login(email, pass)) {
+                // success
+            } else {
+                alert('Invalid credentials. Try admin@rtl.com / admin123 or demo@rtl.com / demo123');
+            }
+        }
+
+        // --- INITIALIZATION ---
+
+        window.addEventListener('DOMContentLoaded', () => {
+            auth.init();
+        });
+
+    </script>
+</body>
+</html>
